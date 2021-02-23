@@ -10,6 +10,9 @@ import webbrowser
 
 pygame.init()
 
+install_message = """For the program to run you must install the following: 
+                \n\n nltk module, eng_to_ipa module, gTTs module
+                \n\nHave you installed them?"""
 initial_message = """Welcome to IPA Transcription Training Software! 
                 \n Go to File > Instructions to learn how to use the software"""
 reset_message = "Your training is over. \nChoose new settings and open a new file."
@@ -100,20 +103,21 @@ class View:
     
  
     def open_website(self):
-        return webbrowser.open("https://www.nltk.org/install.html")
+        urls = ["https://www.nltk.org/install.html", "https://pypi.org/project/eng-to-ipa/", "https://pypi.org/project/gTTS/"]
+        for url in urls:
+            webbrowser.open_new_tab(url)
  
     def open_window(self):
         self.root.withdraw()
         top = tk.Toplevel()
         top.geometry("600x250+330+200")
         top.title("Install")
-        info = "For the program to run you must install the Natural Language Toolkit (NLTK). \n\nHave you installed it?"
-        initial_label = tk.Label(top, text=info, padx=20, pady=20)
+        initial_label = tk.Label(top, text=install_message, padx=20, pady=20)
         initial_label.pack(padx=30, pady=30)
-        button_yes = tk.Button(top, bg="LightSkyBlue3", fg="white", text="Yes, run the program",
+        button_yes = tk.Button(top, bg="SlateGray3", fg="white", text="Yes, run the program",
                                command=lambda: [top.destroy(), self.root.deiconify()])
         button_yes.place(relx=0.3, rely=0.7)
-        button_no = tk.Button(top, bg="LightSkyBlue3", fg="white", text="No, I will do it now",
+        button_no = tk.Button(top, bg="SlateGray3", fg="white", text="No, I will do it now",
                               command=lambda: [self.open_website(), self.root.destroy()])
         button_no.place(relx=0.53, rely=0.7)
  
