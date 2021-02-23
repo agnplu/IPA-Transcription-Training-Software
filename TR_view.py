@@ -11,12 +11,15 @@ import webbrowser
 
 
 
-install_message = """For the program to run you must install the following: 
-                \n\n nltk module, eng_to_ipa module, gTTs module
-                \n\nHave you installed them?"""
-initial_message = """Welcome to IPA Transcription Training Software! 
-                \n Go to File > Instructions to learn how to use the software"""
-reset_message = "Your training is over. \nChoose new settings and open a new file."
+install_message =       """For the program to run you must install the following: 
+                        \n\n nltk module, eng_to_ipa module, gTTs module
+                        \n\nHave you installed them?"""
+initial_message =       """Welcome to IPA Transcription Training Software! 
+                        \n Go to File > Instructions to learn how to use the software"""
+reset_message =         "Your training is over. \nChoose new settings and open a new file."
+nltk_information =      "Natural Language Toolkit (NLTK) is a free, open source, platform for building Python programs to work with human language data. It provides a range of interfaces such as text processing libraries for classification, tokenization, stemming, tagging, parsing, and semantic reasoning. Its implementation to a Python program allows for working with corpora, categorizing text and analyzing its linguistic structures. Programs using NLTK might prove useful for individuals working in the field of linguistics, as well as for students, educators, researchers, and engineers."
+contact_information=    "My name is Agnieszka Pludra and I am a third year university student at Adam Mickiewicz University in Poznań, Poland. \nIf you have any questions or suggestions, send me an email!"
+instruction_information= "bleble"
 
 
 class View:
@@ -34,14 +37,16 @@ class View:
         self.root.grid_columnconfigure(1, weight=3)
         
         menubar = tk.Menu(self.root)
-        filemenu = tk.Menu(menubar, tearoff=0)
+        filemenu = tk.Menu(menubar)
         filemenu.add_command(label="Open", command=self.open_file)
         menubar.add_cascade(label="File", menu=filemenu)
         
-        helpmenu = tk.Menu(menubar, tearoff=0)
-        helpmenu.add_command(label="Contact", command=self.open_file)
-        helpmenu.add_command(label="About", command=self.open_file)
+        helpmenu = tk.Menu(menubar)
         menubar.add_cascade(label="Help", menu=helpmenu)
+        helpmenu.add_command(label="About the program", command=self.instruction_info)
+        helpmenu.add_command(label="About the modules", command=self.modules_info)
+        helpmenu.add_command(label="Contact the author", command=self.contact_info)
+
         
         self.root.config(menu=menubar)
         
@@ -76,7 +81,7 @@ class View:
         #self.button_correct = tk.Button(self.btn_frame, text="Show Correct", command=self.on_correct_press)
         #self.button_correct.grid(row=0, column=1, sticky='news')
     
-        self.button_next = tk.Button(self.btn_frame, text="Start", command=self.on_next_press)
+        self.button_next = tk.Button(self.btn_frame, text="Start", command=self.on_next_press) #nice :D
         self.button_next.grid(row=0, column=1, sticky='news')
         
         self.button_check["state"] = tk.DISABLED
@@ -130,8 +135,6 @@ class View:
         doc = Text(path)
         tokens = doc.filter_tokens(self.cfg.pos_list)
         self.transcription = doc.transcribe(tokens)
-        self.button_next["state"] = tk.NORMAL
-        self.button_check["state"] = tk.NORMAL
         
         for k in self.transcription:
             self.active_word = k
@@ -139,7 +142,8 @@ class View:
         self.button_next.configure(bg = "SlateGray3")
 
         self.info_label.configure(text= "Currently open: {} \nWord count: {} \nType-to-token ratio: {}".format(file_name, 5, 5))
-        
+        self.button_next["state"] = tk.NORMAL
+        self.button_check["state"] = tk.NORMAL
 
     def reset_data(self):
         self.button_next["state"] = tk.DISABLED
@@ -173,11 +177,7 @@ class View:
         self.root.configure(background="SteelBlue4")
         self.button_next.configure(text="Next")
         self.button_next.configure(bg='SystemButtonFace')
-        
-        
-    def on_correct_press(self):
-        pass
-        
+
             
     def on_check_press(self, answer):
         correct = self.transcription[self.active_word]
@@ -187,7 +187,36 @@ class View:
         if answer in correct:
             self.root.configure(background="green")
         else:
-            self.root.configure(background="red")            
+            self.root.configure(background="red") 
+            
+    def instruction_info(self):
+        top = tk.Toplevel()
+        top.title("Instructions")
+        top.geometry("600x400+330+200")
+        info_label = tk.Label(top, text = instruction_information, font=9, wraplength=550, padx=10, pady=10)
+        info_label.pack(padx=10, pady=10, fill=tk.BOTH)
+        button_close = tk.Button(top, text="Close", command=top.destroy, bg="SlateGray3")
+        button_close.pack(padx=10, pady=10)
+    
+    def modules_info(self):
+        top = tk.Toplevel()
+        top.title("About the modules")
+        top.geometry("600x250+330+200")
+        info_label = tk.Label(top, text=nltk_information, font=9, wraplength=550, padx=10, pady=10)
+        info_label.pack(padx=10, pady=10, fill=tk.BOTH)
+        button_close = tk.Button(top, text="Close", command=top.destroy, bg="SlateGray3")
+        button_close.pack(padx=10, pady=10)
+    
+    def contact_info(self):
+        top = tk.Toplevel()
+        top.title("Contact the author")
+        top.geometry("600x250+330+200")
+        contact_label = tk.Label(top, text=contact_information, font=10, wraplength=550, padx=10, pady=10)
+        contact_label.pack(padx=10, pady=25, fill=tk.BOTH)
+        email_label = tk.Label(top, text="agnplu@st.amu.edu.pl", bg="SlateGray3", font=10, fg="white", pady=10, borderwidth=1, relief="solid")
+        email_label.pack(padx=10, pady=(0,15), fill=tk.BOTH)
+        button_close = tk.Button(top, text="Close", command=top.destroy, bg="SlateGray3")
+        button_close.pack(padx = 10, pady = 20)
 
 
 View()

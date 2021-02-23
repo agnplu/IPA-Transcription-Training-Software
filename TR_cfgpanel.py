@@ -70,7 +70,6 @@ class ConfigPanel(tk.Frame):
 
         self.selected = set()
 
-        pos_count = len(pos_map.keys())
         col_count = 4
         for i in range(col_count):
             pos_action_frame.grid_columnconfigure(i, weight=1)
