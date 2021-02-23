@@ -6,6 +6,7 @@ import random
 from tkinter import filedialog
 from gtts import gTTS
 import pygame
+import webbrowser
 
 pygame.init()
 
@@ -44,7 +45,7 @@ class View:
         self.info_label.grid(row=0, column=0, sticky="news", padx=4, pady=(4,0))
 
         
-        self.cfgp = ConfigPanel(self.root, {"Nouns":"N", "Verbs":"V", "Adjectives":"ADJ"}, self.on_save)
+        self.cfgp = ConfigPanel(self.root, {"Nouns":"N", "Verbs":"V", "Adjectives":"ADJ", "Adverbs":"ADV"}, self.on_save)
         self.cfgp.grid(row=1, column=0, rowspan=2, sticky='news', padx=4, pady=4)
         self.cfg = None
         self.next_pressed = 0
@@ -77,6 +78,7 @@ class View:
         self.button_check["state"] = tk.DISABLED
         self.button_next["state"] = tk.DISABLED
 
+        self.open_window()
         self.root.mainloop() 
         
     def on_save(self, cfg):
@@ -97,6 +99,24 @@ class View:
         print(self.cfg.word_count)
     
  
+    def open_website(self):
+        return webbrowser.open("https://www.nltk.org/install.html")
+ 
+    def open_window(self):
+        self.root.withdraw()
+        top = tk.Toplevel()
+        top.geometry("600x250+330+200")
+        top.title("Install")
+        info = "For the program to run you must install the Natural Language Toolkit (NLTK). \n\nHave you installed it?"
+        initial_label = tk.Label(top, text=info, padx=20, pady=20)
+        initial_label.pack(padx=30, pady=30)
+        button_yes = tk.Button(top, bg="LightSkyBlue3", fg="white", text="Yes, run the program",
+                               command=lambda: [top.destroy(), self.root.deiconify()])
+        button_yes.place(relx=0.3, rely=0.7)
+        button_no = tk.Button(top, bg="LightSkyBlue3", fg="white", text="No, I will do it now",
+                              command=lambda: [self.open_website(), self.root.destroy()])
+        button_no.place(relx=0.53, rely=0.7)
+ 
     def open_file(self):
         if self.cfg == None or self.next_pressed != 0:
             return
@@ -111,7 +131,7 @@ class View:
             self.active_word = k
             break
         self.button_next.configure(bg = "SlateGray3")
-        #fix the next line
+
         self.info_label.configure(text= "Currently open: {} \nWord count: {} \nType-to-token ratio: {}".format(file_name, doc.type2token_ratio(), 5))
         
 
