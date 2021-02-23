@@ -5,10 +5,11 @@ from TR_cfgpanel import ConfigPanel
 import random
 from tkinter import filedialog
 from gtts import gTTS
-import pygame
+from playsound import playsound
+import os
 import webbrowser
 
-pygame.init()
+
 
 install_message = """For the program to run you must install the following: 
                 \n\n nltk module, eng_to_ipa module, gTTs module
@@ -86,8 +87,7 @@ class View:
         
     def on_save(self, cfg):
         self.cfg = cfg
-        self.button_next["state"] = tk.NORMAL
-        self.button_check["state"] = tk.NORMAL
+
         self.cfgp.btn_save["state"] = tk.DISABLED
         
         if self.cfg.audio:
@@ -114,10 +114,10 @@ class View:
         top.title("Install")
         initial_label = tk.Label(top, text=install_message, padx=20, pady=20)
         initial_label.pack(padx=30, pady=30)
-        button_yes = tk.Button(top, bg="SlateGray3", fg="white", text="Yes, run the program",
+        button_yes = tk.Button(top, bg="SlateGray3", text="Yes, run the program",
                                command=lambda: [top.destroy(), self.root.deiconify()])
         button_yes.place(relx=0.3, rely=0.7)
-        button_no = tk.Button(top, bg="SlateGray3", fg="white", text="No, I will do it now",
+        button_no = tk.Button(top, bg="SlateGray3", text="No, I will do it now",
                               command=lambda: [self.open_website(), self.root.destroy()])
         button_no.place(relx=0.53, rely=0.7)
  
@@ -130,13 +130,15 @@ class View:
         doc = Text(path)
         tokens = doc.filter_tokens(self.cfg.pos_list)
         self.transcription = doc.transcribe(tokens)
+        self.button_next["state"] = tk.NORMAL
+        self.button_check["state"] = tk.NORMAL
         
         for k in self.transcription:
             self.active_word = k
             break
         self.button_next.configure(bg = "SlateGray3")
 
-        self.info_label.configure(text= "Currently open: {} \nWord count: {} \nType-to-token ratio: {}".format(file_name, doc.type2token_ratio(), 5))
+        self.info_label.configure(text= "Currently open: {} \nWord count: {} \nType-to-token ratio: {}".format(file_name, 5, 5))
         
 
     def reset_data(self):
@@ -147,29 +149,30 @@ class View:
         self.label.config(text=reset_message)
         self.active_word = None
         self.next_pressed = 0
-        self.info_label.configure(text="Currently open: \nWord count: \nType-to-token ratio:")
+        self.info_label.configure(text="Currently open: \nWord count: \nType-to-token ratio:")       
+        if os.path.exists("word.mp3"):
+            os.remove("word.mp3")
         
-    
         
     def on_play(self):
-        tts = gTTS(text = self.active_word[0], lang = 'en', slow = False)
-        tts.save('word.mp3')       
-        
-        pygame.mixer.music.load("word.mp3") #Loading File Into Mixer
-        pygame.mixer.music.play() #Playing It In The Whole Device
+        if not os.path.exists("word.mp3"):
+            tts = gTTS(text = self.active_word[0], lang = 'en', slow = False)
+            tts.save('word.mp3')       
+        playsound('word.mp3')
     
     def on_next_press(self):
         self.next_pressed += 1
         if self.next_pressed > self.cfg.word_count:
             self.reset_data()
             return
+        if os.path.exists("word.mp3"):
+            os.remove("word.mp3")
             
         self.active_word = random.choice(list(self.transcription.keys()))
         self.label.config(text=self.active_word)
         self.root.configure(background="SteelBlue4")
         self.button_next.configure(text="Next")
         self.button_next.configure(bg='SystemButtonFace')
-        
         
         
     def on_correct_press(self):
