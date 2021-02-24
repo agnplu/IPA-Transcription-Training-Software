@@ -60,9 +60,6 @@ class Text:
                         transcribed[el] = [trans_el[0]]
                     else:
                         transcribed[el] = [trans_el[-1]]
-                elif el[0].lower() == "perfect":
-                    if el[1].startswith("N"):
-                        transcribed[el] = [trans_el[0]]
                 else:
                     transcribed[el] = trans_el
         return transcribed
