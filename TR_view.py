@@ -270,26 +270,6 @@ class View:
 
 
 View()
-
-
-
-        
-"""     self.correct_popup = tk.Button(self.correct_label, text="Show correct", bg="LightSkyBlue3", fg="white")
-        self.correct_popup.pack(anchor=tk.E, padx=10, pady=10)
-        self.correct_popup.bind("<Enter>", self.show_correct)
-        self.correct_popup.bind("<Leave>", self.hide_correct)
-
-        self.answer_label = tk.Label(self.correct_label, bg="gray97", fg="gray97", text="", padx=10, pady=10, width=60, wraplength=320)
-        self.answer_label.pack(padx=10, pady=(0, 5))
-        
-        
-    def show_correct(self, event):
-        self.answer_label.configure(bg="white", fg="gray55", borderwidth=1, relief="groove")
-
-    def hide_correct(self, event):
-        self.answer_label.configure(bg="gray97", fg="gray97", borderwidth=0)
-        
-        """
         
         
         
