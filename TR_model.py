@@ -23,7 +23,7 @@ class Text:
     def remove_punctuation(self):
         stripped_text=[]
         for el in self.tokenize():
-            if el not in string.punctuation and el != "n't" and not el.startswith("'"):
+            if el not in string.punctuation and el!="n't" and not el.startswith("'"):
                 stripped_text.append(el) 
         return stripped_text
   
@@ -39,7 +39,7 @@ class Text:
     def filter_tokens(self, filtering_arguments):
         chosen_words=[]
         for el in self.remove_duplicates():
-            if len(filtering_arguments) == 0:
+            if len(filtering_arguments)==0:
                 chosen_words.append(el)
             for arg in filtering_arguments:
                 if el[1].startswith(arg):
@@ -50,9 +50,9 @@ class Text:
         transcribed={}
         for el in tokens:
             trans_el=ipa.ipa_list(el[0])[0]
-            if len(trans_el) == 0:
+            if len(trans_el)==0:
                 continue
-            elif len(trans_el) == 1:
+            elif len(trans_el)==1:
                 transcribed[el] =[trans_el[0]]
             else:
                 if el[0].lower() in suspicious_words:
