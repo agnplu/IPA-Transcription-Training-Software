@@ -52,48 +52,45 @@ class View:
         self.root.grid_columnconfigure(1, weight=3)
 
         menubar = tk.Menu(self.root)
-        filemenu = tk.Menu(menubar)
-        filemenu.add_command(label="Open", command=self.open_file)
-        menubar.add_cascade(label="File", menu=filemenu)
 
         helpmenu = tk.Menu(menubar)
         menubar.add_cascade(label="Help", menu=helpmenu)
         helpmenu.add_command(label="Instructions", command=self.instruction_info)
         helpmenu.add_command(label="About the modules", command=self.modules_info)
         helpmenu.add_command(label="Contact the author", command=self.contact_info)
-
-
         self.root.config(menu=menubar)
 
         self.open_frame = tk.Frame(self.root)
         self.open_frame.grid(row=0, sticky='news', padx=4, pady=(4,0))
         self.open_frame.rowconfigure(0, weight=1)
         self.open_frame.rowconfigure(1, weight=1)
+        self.open_frame.columnconfigure(0, weight=1)
 
         self.open_btn = tk.Button(self.open_frame, text="Open file", command=self.open_file)
-        self.open_btn.grid(row=0)
-        self.info_label = tk.Label(self.open_frame, text="Currently open: \nWord count: \nType-to-token ratio:", justify=tk.LEFT, anchor="w", padx=15, pady=10, bg="SlateGray3")
-        self.info_label.grid(row=1, columnspan=2, sticky="news")
+        self.open_btn.grid(row=0, column=0)
+        self.info_label = tk.Label(self.open_frame, text="Currently open: \nWord count: \nType-to-token ratio:", justify=tk.LEFT, anchor="w", padx=15, pady=10)
+        self.info_label.grid(row=1, column=0, sticky="news")
 
         self.cfgp = ConfigPanel(self.root, {"Nouns":"N", "Verbs":"V", "Adjectives":"ADJ", "Adverbs":"ADV", "Conjunctions":"C", "Determiners":"D", "Pronouns":"PRON", "Adpositions":"ADP"}, self.on_save)
         self.cfgp.grid(row=1, column=0, rowspan=2, sticky='news', padx=4, pady=4)
         self.cfg = None
         self.next_pressed = 0
 
-        self.btn_play = tk.Button(self.root, text="Play word", font=30, bg="gray75", command=self.on_play)
-        self.btn_play.grid(row=0, column=1, sticky='news')
-        self.btn_play.grid_remove()
-
         self.main_frame = tk.Frame(self.root)
-        self.main_frame.grid(row=0, column=1, sticky='news', padx=(0,4), pady=(4,0))
+        self.main_frame.grid(row=0, column=1, sticky='news')
         self.main_frame.rowconfigure(0, weight=3)
         self.main_frame.rowconfigure(1, weight=1)
+        self.main_frame.columnconfigure(0, weight=1)
+
+        self.btn_play = tk.Button(self.main_frame, text="Play word", font=30, bg="gray75", command=self.on_play)
+        self.btn_play.grid(row=0, column=0, sticky='news')
+        self.btn_play.grid_remove()
 
         self.label=tk.Label(self.main_frame, text=initial_message, font=30, bg="SlateGray3", wraplength=400)
-        self.label.grid(row=0, sticky='news')
+        self.label.grid(row=0, column=0, sticky='news')
 
         self.correct_label=tk.Label(self.main_frame, text="", bg="SlateGray3")
-        self.correct_label.grid(row=1, sticky='news')
+        self.correct_label.grid(row=1, column=0, sticky='news')
 
         self.ipakb = IPAKB(self.root, self.on_check_press)
         self.ipakb.grid(row=1, column=1, sticky='news')
@@ -107,7 +104,7 @@ class View:
         self.button_check = tk.Button(self.btn_frame, text="Check", command=lambda: self.on_check_press(self.ipakb.textbox.get("1.0", 'end-1c')))
         self.button_check.grid(row=0, column=0, sticky='news')
 
-        self.button_next = tk.Button(self.btn_frame, text="Start", command=self.on_next_press) #nice :D
+        self.button_next = tk.Button(self.btn_frame, text="Start", command=self.on_next_press)
         self.button_next.grid(row=0, column=1, sticky='news')
 
         self.button_check["state"] = tk.DISABLED
@@ -176,6 +173,7 @@ class View:
         self.button_check["state"] = tk.DISABLED
         self.cfgp.btn_save["state"] = tk.NORMAL
         self.label.config(text=reset_message)
+        self.correct_label.configure(text="", bg="SlateGray3")
         self.active_word = None
         self.next_pressed = 0
         self.info_label.configure(text="Currently open: \nWord count: \nType-to-token ratio:")
@@ -201,9 +199,9 @@ class View:
 
         self.active_word = random.choice(list(self.transcription.keys()))
         self.label.config(text=self.active_word)
-        self.root.configure(background="SteelBlue4")
         self.button_next.configure(text="Next")
         self.button_next.configure(bg='SystemButtonFace')
+        self.correct_label.configure(text="", bg="SlateGray3")
 
 
     def on_check_press(self, answer):
@@ -212,11 +210,9 @@ class View:
         print("CORRECT: ", correct)
         print(answer in correct)
         if answer in correct:
-            self.root.configure(background="green")
-            self.correct_label.configure(text="Correct")
+            self.correct_label.configure(text="Correct!", fg="dark green", bg="azure3")
         else:
-            self.root.configure(background="red")
-            self.correct_label.configure(text="Try again")
+            self.correct_label.configure(text="Try again!", fg="OrangeRed4", bg="azure3")
 
     def instruction_info(self):
         top = tk.Toplevel()
