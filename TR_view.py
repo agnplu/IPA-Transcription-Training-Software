@@ -75,8 +75,6 @@ class View:
         self.info_label = tk.Label(self.open_frame, text="Currently open: \nWord count: \nType-to-token ratio:", justify=tk.LEFT, anchor="w", padx=15, pady=10, bg="SlateGray3")
         self.info_label.grid(row=1, columnspan=2, sticky="news")
 
-
-
         self.cfgp = ConfigPanel(self.root, {"Nouns":"N", "Verbs":"V", "Adjectives":"ADJ", "Adverbs":"ADV", "Conjunctions":"C", "Determiners":"D", "Pronouns":"PRON", "Adpositions":"ADP"}, self.on_save)
         self.cfgp.grid(row=1, column=0, rowspan=2, sticky='news', padx=4, pady=4)
         self.cfg = None
@@ -86,8 +84,16 @@ class View:
         self.btn_play.grid(row=0, column=1, sticky='news')
         self.btn_play.grid_remove()
 
-        self.label = tk.Label(self.root, text=initial_message, font=30, bg="SlateGray3", wraplength=400)
-        self.label.grid(row=0, column=1, sticky='news', padx=(0,4), pady=(4,0))
+        self.main_frame = tk.Frame(self.root)
+        self.main_frame.grid(row=0, column=1, sticky='news', padx=(0,4), pady=(4,0))
+        self.main_frame.rowconfigure(0, weight=3)
+        self.main_frame.rowconfigure(1, weight=1)
+
+        self.label=tk.Label(self.main_frame, text=initial_message, font=30, bg="SlateGray3", wraplength=400)
+        self.label.grid(row=0, sticky='news')
+
+        self.correct_label=tk.Label(self.main_frame, text="", bg="SlateGray3")
+        self.correct_label.grid(row=1, sticky='news')
 
         self.ipakb = IPAKB(self.root, self.on_check_press)
         self.ipakb.grid(row=1, column=1, sticky='news')
@@ -125,7 +131,6 @@ class View:
         print(self.cfg.pos_list)
         print(self.cfg.audio)
         print(self.cfg.word_count)
-
 
     def open_website(self):
         urls = ["https://www.nltk.org/install.html", "https://pypi.org/project/eng-to-ipa/", "https://pypi.org/project/gTTS/", "https://pypi.org/project/playsound/"]
@@ -177,7 +182,6 @@ class View:
         if os.path.exists("word.mp3"):
             os.remove("word.mp3")
 
-
     def on_play(self):
         if not os.path.exists("word.mp3"):
             tts = gTTS(text = self.active_word[0], lang = 'en', slow = False)
@@ -209,8 +213,10 @@ class View:
         print(answer in correct)
         if answer in correct:
             self.root.configure(background="green")
+            self.correct_label.configure(text="Correct")
         else:
             self.root.configure(background="red")
+            self.correct_label.configure(text="Try again")
 
     def instruction_info(self):
         top = tk.Toplevel()
