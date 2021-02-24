@@ -63,7 +63,6 @@ class Text:
                 else:
                     transcribed[el] = trans_el
         return transcribed
-
     
     def count_unique(self):
         return len(set(self.lower))
