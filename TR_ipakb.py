@@ -28,7 +28,7 @@ class IPAKB(tk.Frame):
         # SCHWA
         'y': 'ə', 'Y': 'ɜ',
         # SPECIAL
-        '<colon>': 'ˌ', '<quoteright>': 'ˈ', '<Return>': ''
+        '<comma>': 'ˌ', '<quoteright>': 'ˈ', '<Return>': ''
     }
 
 
@@ -111,7 +111,7 @@ class IPAKB(tk.Frame):
 
     def write_evt(self, event):
         """This method handles key-presses from the physical keyboard."""
-        if event.keysym in ['colon', 'quoteright']:
+        if event.keysym in ['comma', 'quoteright']:
             self.textbox.insert(tk.END, IPAKB.kb_map["<" + event.keysym + ">"])
         elif event.keysym in IPAKB.kb_map:
             self.textbox.insert(tk.END, IPAKB.kb_map[event.keysym])
