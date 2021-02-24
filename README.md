@@ -9,6 +9,7 @@ The IPA Transcription Training Software is a tool that facilitates learning IPA 
 
 The software allows its users to practice the IPA transcription at their own pace and in a personalized way (a range of training options available). Because of that, the software is both, a useful supplement for students of English Philology/Linguistics and a stand-alone course for individuals who plan to learn the IPA from scratch. In the future, the software might be extended to account for other languages and, possibly, other forms of practice (e.g. it could accept and analyze audio input, and thus enable the user to practice sound production).
 
+
 ### Functions
 
  - **Upload a text** - allows for selecting a .txt file of the user's liking
@@ -17,6 +18,7 @@ The software allows its users to practice the IPA transcription at their own pac
       - selecting parts of speech
       - selecting the number of words to practice
  - **Practice transcribing words**      
+
 
 ### External Modules
 
@@ -28,9 +30,11 @@ The software allows its users to practice the IPA transcription at their own pac
 - **gTTs** – a Python library and CLI tool to interface with Google Translate's text-to-speech API [(learn more)](https://pypi.org/project/gTTS/)
 - **playsound** – a Python cross platform, single-function module with no dependencies for playing sounds. [(learn more)](https://pypi.org/project/playsound/)
 
+
 ### Requirements
 
 For the program to run properly, you must install the abovementioned external modules. In case you do not do it, the program will redirect you to the corresponding websites when you run it. 
+
 
 ### Contributing
 
