@@ -4,7 +4,7 @@ from TR_model import Text
 from TR_cfgpanel import ConfigPanel
 import random
 from tkinter import filedialog
-from gtts import gTTS
+from gtts import gTTS, gTTSError
 from playsound import playsound
 import os
 import webbrowser
@@ -12,7 +12,7 @@ import webbrowser
 
 
 install_message =       """For the program to run you must install the following: 
-                        \n\n nltk module, eng_to_ipa module, gTTs module
+                        \n\n nltk module, eng_to_ipa module, gTTs module, playsound module
                         \n\nHave you installed them?"""
 initial_message =       """Welcome to IPA Transcription Training Software! 
                         \n Go to File > Instructions to learn how to use the software"""
@@ -47,13 +47,21 @@ class View:
         helpmenu.add_command(label="About the modules", command=self.modules_info)
         helpmenu.add_command(label="Contact the author", command=self.contact_info)
 
-        
-        self.root.config(menu=menubar)
-        
-        self.info_label = tk.Label(self.root, text="Currently open: \nWord count: \nType-to-token ratio:", justify=tk.LEFT, anchor="w", padx=15, pady=10, bg="SlateGray3")
-        self.info_label.grid(row=0, column=0, sticky="news", padx=4, pady=(4,0))
 
-        
+        self.root.config(menu=menubar)
+
+        self.open_frame = tk.Frame(self.root)
+        self.open_frame.grid(row=0, sticky='news', padx=4, pady=(4,0))
+        self.open_frame.rowconfigure(0, weight=1)
+        self.open_frame.rowconfigure(1, weight=1)
+
+        self.open_btn = tk.Button(self.open_frame, text="Open file", command=self.open_file)
+        self.open_btn.grid(row=0)
+        self.info_label = tk.Label(self.open_frame, text="Currently open: \nWord count: \nType-to-token ratio:", justify=tk.LEFT, anchor="w", padx=15, pady=10, bg="SlateGray3")
+        self.info_label.grid(row=1, columnspan=2, sticky="news")
+
+
+
         self.cfgp = ConfigPanel(self.root, {"Nouns":"N", "Verbs":"V", "Adjectives":"ADJ", "Adverbs":"ADV"}, self.on_save)
         self.cfgp.grid(row=1, column=0, rowspan=2, sticky='news', padx=4, pady=4)
         self.cfg = None
@@ -66,7 +74,6 @@ class View:
         self.label = tk.Label(self.root, text=initial_message, font=30, bg="SlateGray3", wraplength=400)
         self.label.grid(row=0, column=1, sticky='news', padx=(0,4), pady=(4,0))
         
-        
         self.ipakb = IPAKB(self.root, self.on_check_press)
         self.ipakb.grid(row=1, column=1, sticky='news')
         
@@ -78,8 +85,6 @@ class View:
         
         self.button_check = tk.Button(self.btn_frame, text="Check", command=lambda: self.on_check_press(self.ipakb.textbox.get("1.0", 'end-1c')))
         self.button_check.grid(row=0, column=0, sticky='news')
-        #self.button_correct = tk.Button(self.btn_frame, text="Show Correct", command=self.on_correct_press)
-        #self.button_correct.grid(row=0, column=1, sticky='news')
     
         self.button_next = tk.Button(self.btn_frame, text="Start", command=self.on_next_press) #nice :D
         self.button_next.grid(row=0, column=1, sticky='news')
@@ -108,7 +113,7 @@ class View:
     
  
     def open_website(self):
-        urls = ["https://www.nltk.org/install.html", "https://pypi.org/project/eng-to-ipa/", "https://pypi.org/project/gTTS/"]
+        urls = ["https://www.nltk.org/install.html", "https://pypi.org/project/eng-to-ipa/", "https://pypi.org/project/gTTS/", "https://pypi.org/project/playsound/"]
         for url in urls:
             webbrowser.open_new_tab(url)
  
@@ -157,11 +162,14 @@ class View:
         if os.path.exists("word.mp3"):
             os.remove("word.mp3")
         
-        
+
     def on_play(self):
         if not os.path.exists("word.mp3"):
             tts = gTTS(text = self.active_word[0], lang = 'en', slow = False)
-            tts.save('word.mp3')       
+            try:
+                tts.save('word.mp3')
+            except gTTSError as e:
+                print(e)
         playsound('word.mp3')
     
     def on_next_press(self):
