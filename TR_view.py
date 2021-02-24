@@ -62,7 +62,7 @@ class View:
 
 
 
-        self.cfgp = ConfigPanel(self.root, {"Nouns":"N", "Verbs":"V", "Adjectives":"ADJ", "Adverbs":"ADV", "Conjunctions":"C", "Determiners":"D", "Pronouns":"PRON", "Particles":"PRT"}, self.on_save)
+        self.cfgp = ConfigPanel(self.root, {"Nouns":"N", "Verbs":"V", "Adjectives":"ADJ", "Adverbs":"ADV", "Conjunctions":"C", "Determiners":"D", "Pronouns":"PRON", "Adpositions":"ADP"}, self.on_save)
         self.cfgp.grid(row=1, column=0, rowspan=2, sticky='news', padx=4, pady=4)
         self.cfg = None
         self.next_pressed = 0
