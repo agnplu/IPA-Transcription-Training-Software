@@ -31,7 +31,7 @@ nltk_information=      """Natural Language Toolkit (NLTK)
                         \nThis Python library interfaces with Google Translate's text-to-speech API to convert a string into an audio file."""
 contact_information=    "My name is Agnieszka Pludra and I am a third year student of English Linguistics at Adam Mickiewicz University in Poznań, Poland. \nIf you have any questions or suggestions, send me an email!"
 instruction_information= """Follow these simple steps to begin your practice:
-                        \n\n1. Choose preferred settings and click SAVE SETTINGS
+                        \n1. Choose preferred settings and click SAVE SETTINGS
                         \n2. Open a txt file by clicking OPEN FILE
                         \n3. When ready, press START
                         \n4. Transcribe the word you see/hear using the IPA keyboard

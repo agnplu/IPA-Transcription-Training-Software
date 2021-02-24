@@ -1,18 +1,15 @@
 # IPA Transcription Training Software
-----------------------------
 
 
-### Description
+## Description
 
 
 The IPA Transcription Training Software is a tool that facilitates learning IPA symbols and training the transcription of English texts. It should be of great help to all students of English who want to learn the International Phonetic Alphabet or practice transcribing English texts.
 
 The software allows its users to practice the IPA transcription at their own pace and in a personalized way (a range of training options available). Because of that, it is both, a useful supplement for students of English Philology/Linguistics and a stand-alone course for individuals who plan to learn the IPA transcription from scratch. 
 
-In the future, the software might be extended to account for other languages and, possibly, other forms of practice (e.g. it could accept and analyze audio input, and thus enable the user to practice sound production).
 
-
-### Functions
+## Functions
 
 #### **Upload a text**
 Allows for selecting a .txt file of the user's liking
@@ -20,12 +17,12 @@ Allows for selecting a .txt file of the user's liking
 Allows for suiting training options to the user's needs. Current options include:
 - selecting written or spoken mode
 - selecting parts of speech
-- selecting the number of words to practice
+- selecting the number of words
 #### **Practice transcribing words**
 Allows for practicing the transcription of English words
 
 
-### External Modules
+## External Modules
 
 #### Word tokenization and POS tagging:
 - **nltk** – a suite of libraries and programs for symbolic and statistical natural language processing (NLP) for English written in the Python programming language [(learn more)](https://www.nltk.org/)
@@ -36,15 +33,19 @@ Allows for practicing the transcription of English words
 - **playsound** – a Python cross platform, single-function module with no dependencies for playing sounds. [(learn more)](https://pypi.org/project/playsound/)
 
 
-### Requirements
+## Requirements
 
 For the program to run properly, you must install the abovementioned external modules. In case you do not do it, the program will redirect you to the corresponding websites when you run it. 
 
-### Acknowledgement
+## Roadmap
+
+In the future, the software may be extended to account for other languages and, possibly, other forms of practice (e.g. it could accept and analyze audio input, thus enabling the user to practice sound production).
+
+## Acknowledgement
 
 Special thanks to Miroslav Bićanić from the University of Zagreb for helping me create the ipakb module.
 
-### Contributing
+## Contributing
 
-If you want to introduce any changes to the program, please contact me first to discuss what you would like to modify. 
+If you want to introduce any changes to the software, please contact me first to discuss what you would like to modify. 
 
