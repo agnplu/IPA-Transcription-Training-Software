@@ -107,7 +107,6 @@ class ConfigPanel(tk.Frame):
         c.word_count = int(self.word_count.get())
         c.audio = self.radio_selection.get()
         self.custom_on_save(c)
-        self.btn_save.configure(bg="SystemButtonFace")
 
     def on_checkbox(self, key):
         if key in self.selected:

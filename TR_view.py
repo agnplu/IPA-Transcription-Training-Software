@@ -14,12 +14,12 @@ import webbrowser
 install_message =       """For the program to run you must install the following: 
                         \n\nnltk module, eng_to_ipa module, gTTs module, playsound module
                         \n\nHave you installed them?"""
-initial_message =       """Welcome to IPA Transcription Training Software! 
+initial_message =       """Welcome to the IPA Transcription Training Software! 
                         \n\nFirst, choose your preferred type of training and press SAVE SETTINGS"""
 open_file_message =     "Now open a file by pressing the OPEN FILE button"
 start_message =         """Press START to begin your training.
                         \nThe software checks American English pronunciation only.
-                        \nDon't forget to mark the main stress in multisyllabic words"""
+                        \nDon't forget about the primary and secondary stress in multisyllabic words."""
 reset_message =         "Your training is over. \nChoose new settings and open a new file."
 nltk_information =      """Natural Language Toolkit (NLTK)
                         \nA free, open source, platform for building Python programs to work with human language data. It provides a range of interfaces such as text processing libraries for classification, tokenization, stemming, tagging, parsing, and semantic reasoning. Its implementation to a Python program allows for working with corpora, categorizing text, and analyzing its linguistic structures.
@@ -71,6 +71,7 @@ class View:
 
         self.open_btn = tk.Button(self.open_frame, text="Open file", command=self.open_file)
         self.open_btn.grid(row=0, column=0)
+        self.open_btn["state"] = tk.DISABLED
         self.info_label = tk.Label(self.open_frame, text="Currently open: \nWord count: \nType-to-token ratio:", justify=tk.LEFT, anchor="w", padx=15, pady=10)
         self.info_label.grid(row=1, column=0, sticky="news")
 
@@ -85,11 +86,11 @@ class View:
         self.main_frame.rowconfigure(1, weight=1)
         self.main_frame.columnconfigure(0, weight=1)
 
-        self.btn_play = tk.Button(self.main_frame, text="Play word", font=30, bg="gray75", command=self.on_play)
+        self.btn_play = tk.Button(self.main_frame, text="Play", font=30, bg="SlateGray3", command=self.on_play)
         self.btn_play.grid(row=0, column=0, sticky='news')
         self.btn_play.grid_remove()
 
-        self.label=tk.Label(self.main_frame, text=initial_message, font=30, bg="SlateGray3", wraplength=400)
+        self.label=tk.Label(self.main_frame, text=initial_message, bg="SlateGray3", wraplength=400)
         self.label.grid(row=0, column=0, sticky='news')
 
         self.correct_label=tk.Label(self.main_frame, text="", bg="SlateGray3")
@@ -124,20 +125,20 @@ class View:
     def on_save(self, cfg):
         self.cfg = cfg
 
-        self.cfgp.btn_save["state"] = tk.DISABLED
+        self.cfgp.btn_save["state"]=tk.DISABLED
+        self.cfgp.btn_save.configure(bg="SystemButtonFace")
+        self.open_btn["state"] = tk.NORMAL
         self.label.configure(text=open_file_message)
         self.open_btn.configure(bg="SlateGray3")
 
         if self.cfg.audio:
             self.btn_play.grid()
+            self.btn_play["state"]=tk.DISABLED
             self.label.grid_remove()
         else:
             self.label.grid()
             self.btn_play.grid_remove()
 
-        print(self.cfg.pos_list)
-        print(self.cfg.audio)
-        print(self.cfg.word_count)
 
     def open_website(self):
         urls = ["https://www.nltk.org/install.html", "https://pypi.org/project/eng-to-ipa/", "https://pypi.org/project/gTTS/", "https://pypi.org/project/playsound/"]
@@ -174,18 +175,22 @@ class View:
         self.label.configure(text=start_message)
         self.button_next.configure(bg = "SlateGray3")
         self.info_label.configure(text= "Currently open: {} \nWord count: {} \nType-to-token ratio: {}".format(file_name, 5, 5))
-        self.button_next["state"] = tk.NORMAL
-        self.button_answer["state"] = tk.NORMAL
-        self.button_check["state"] = tk.NORMAL
+        self.button_next["state"]=tk.NORMAL
+        self.button_answer["state"]=tk.NORMAL
+        self.button_check["state"]=tk.NORMAL
+        self.open_btn["state"]=tk.DISABLED
+        self.open_btn.configure(bg="SystemButtonFace")
 
 
     def reset_data(self):
-        self.button_next["state"] = tk.DISABLED
+        self.button_next["state"]=tk.DISABLED
         self.button_next.configure(text="Start")
-        self.button_check["state"] = tk.DISABLED
-        self.button_check["state"] = tk.DISABLED
-        self.cfgp.btn_save["state"] = tk.NORMAL
-        self.label.config(text=reset_message)
+        self.button_check["state"]=tk.DISABLED
+        self.button_answer["state"]=tk.DISABLED
+        self.btn_play["state"] = tk.DISABLED
+        self.cfgp.btn_save["state"]=tk.NORMAL
+        self.cfgp.btn_save.configure(bg="SlateGray3")
+        self.label.config(text=reset_message, font="TkDefaultFont")
         self.correct_label.configure(text="", bg="SlateGray3")
         self.active_word = None
         self.next_pressed = 0
@@ -198,7 +203,7 @@ class View:
             """
             An unexpected problem arose here:
             when I started designing the software, gTTs allowed for choosing American English by selecting "en-us".
-            Recently, however, it has changed as Google has removed almost all <lang>-<geo> tags that used to work.
+            Recently, however, it has changed, as Google has removed almost all <lang>-<geo> tags that used to work.
             Hence, for now, only British English is available.
             The code will be updated as soon as the choice of American English is brought back.
             """
@@ -215,9 +220,10 @@ class View:
             os.remove("word.mp3")
 
         self.active_word = random.choice(list(self.transcription.keys()))
-        self.label.config(text=self.active_word)
-        self.button_next.configure(text="Next", bg='SystemButtonFace')
+        self.label.configure(text=self.active_word, font=30)
+        self.button_next.configure(text="Next", bg="SystemButtonFace")
         self.correct_label.configure(text="", bg="SlateGray3")
+        self.btn_play["state"] = tk.NORMAL
 
     def on_answer_press(self):
         self.correct_label.configure(text="/ ".join(self.transcription[self.active_word]), bg="azure3", fg="midnight blue")
