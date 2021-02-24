@@ -18,9 +18,9 @@ In the future, the software might be extended to account for other languages and
 Allows for selecting a .txt file of the user's liking
 #### **Choose training settings**
 Allows for suiting training options to the user's needs. Current options include:
-      - selecting written or spoken mode
-      - selecting parts of speech
-      - selecting the number of words to practice
+- selecting written or spoken mode
+- selecting parts of speech
+- selecting the number of words to practice
 #### **Practice transcribing words**
 Allows for practicing the transcription of English words
 
