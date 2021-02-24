@@ -12,10 +12,15 @@ import webbrowser
 
 
 install_message =       """For the program to run you must install the following: 
-                        \n\n nltk module, eng_to_ipa module, gTTs module, playsound module
+                        \n\nnltk module, eng_to_ipa module, gTTs module, playsound module
                         \n\nHave you installed them?"""
 initial_message =       """Welcome to IPA Transcription Training Software! 
-                        \n Go to File > Instructions to learn how to use the software"""
+                        \n\nFirst, choose your preferred type of training and press SAVE SETTINGS"""
+open_file_message =     "Now open a file by pressing the OPEN FILE button"
+start_message =         """Press START to begin your training.
+                        \n\nREMEMBER!
+                        \nThe software checks American English pronunciation only.
+                        \nIn multisyllabic words you are required to mark the main stress of a word"""
 reset_message =         "Your training is over. \nChoose new settings and open a new file."
 nltk_information =      """Natural Language Toolkit (NLTK)
                         \nA free, open source, platform for building Python programs to work with human language data. It provides a range of interfaces such as text processing libraries for classification, tokenization, stemming, tagging, parsing, and semantic reasoning. Its implementation to a Python program allows for working with corpora, categorizing text, and analyzing its linguistic structures.
@@ -25,16 +30,16 @@ nltk_information =      """Natural Language Toolkit (NLTK)
                         \n------------------------------------------------------------------------------------------------------------
                         \nGoogle Text-to-Speech (gTTs)
                         \nThis Python library interfaces with Google Translate's text-to-speech API to convert a string into an audio file."""
-contact_information=    "My name is Agnieszka Pludra and I am a third year university student at Adam Mickiewicz University in Poznań, Poland. \nIf you have any questions or suggestions, send me an email!"
+contact_information=    "My name is Agnieszka Pludra and I am a third year student of English Linguistics at Adam Mickiewicz University in Poznań, Poland. \nIf you have any questions or suggestions, send me an email!"
 instruction_information= """Follow these simple steps to begin your practice:
-                            \n1. Choose preferred settings and click SAVE SETTINGS
-                            \n2. Open a txt file by clicking OPEN FILE
-                            \n3. When ready, press START
-                            \n4. Transcribe the word you see/hear using the IPA keyboard
-                            \n5. Press CHECK to verify your transcription
-                            \n6. Press NEXT to display the next word
-                            \n7. When the training is over, repeat the procedure starting from point 1
-                            \nHave fun!"""
+                        \n\n1. Choose preferred settings and click SAVE SETTINGS
+                        \n2. Open a txt file by clicking OPEN FILE
+                        \n3. When ready, press START
+                        \n4. Transcribe the word you see/hear using the IPA keyboard
+                        \n5. Press CHECK to verify your transcription
+                        \n6. Press NEXT to display the next word
+                        \n7. When the training is over, repeat the procedure starting from point 1
+                        \nHave fun!"""
 
 
 class View:
@@ -78,7 +83,7 @@ class View:
 
         self.main_frame = tk.Frame(self.root)
         self.main_frame.grid(row=0, column=1, sticky='news')
-        self.main_frame.rowconfigure(0, weight=3)
+        self.main_frame.rowconfigure(0, weight=5)
         self.main_frame.rowconfigure(1, weight=1)
         self.main_frame.columnconfigure(0, weight=1)
 
@@ -117,6 +122,7 @@ class View:
         self.cfg = cfg
 
         self.cfgp.btn_save["state"] = tk.DISABLED
+        self.label.configure(text=open_file_message)
 
         if self.cfg.audio:
             self.btn_play.grid()
@@ -161,8 +167,8 @@ class View:
         for k in self.transcription:
             self.active_word = k
             break
+        self.label.configure(text=start_message)
         self.button_next.configure(bg = "SlateGray3")
-
         self.info_label.configure(text= "Currently open: {} \nWord count: {} \nType-to-token ratio: {}".format(file_name, 5, 5))
         self.button_next["state"] = tk.NORMAL
         self.button_check["state"] = tk.NORMAL
@@ -244,27 +250,32 @@ class View:
         button_close.pack(padx = 10, pady = 20)
 
 
+
 View()
 
 
-"""
-        self.correct_popup=tk.Button(self.label, text="Show correct", bg="LightSkyBlue3", fg="white")
+
+        
+"""     self.correct_popup = tk.Button(self.correct_label, text="Show correct", bg="LightSkyBlue3", fg="white")
         self.correct_popup.pack(anchor=tk.E, padx=10, pady=10)
         self.correct_popup.bind("<Enter>", self.show_correct)
         self.correct_popup.bind("<Leave>", self.hide_correct)
+
+        self.answer_label = tk.Label(self.correct_label, bg="gray97", fg="gray97", text="", padx=10, pady=10, width=60, wraplength=320)
+        self.answer_label.pack(padx=10, pady=(0, 5))
         
-        self.correct_label=tk.Label(self.label, bg="gray97", fg="gray97", text="", padx=10, pady=10, width=60, wraplength=320)
-        self.correct_label.pack(padx=10, pady=(0,5))
         
     def show_correct(self, event):
-        self.correct_label.configure(bg="white", fg="gray55", borderwidth=1, relief="groove")
+        self.answer_label.configure(bg="white", fg="gray55", borderwidth=1, relief="groove")
 
     def hide_correct(self, event):
-        self.correct_label.configure(bg="gray97", fg="gray97", borderwidth=0)
-        
-        
+        self.answer_label.configure(bg="gray97", fg="gray97", borderwidth=0)
         
         """
+        
+        
+        
+
         
         
         
