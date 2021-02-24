@@ -40,7 +40,11 @@ Allows for practicing the transcription of English words
 
 For the program to run properly, you must install the abovementioned external modules. In case you do not do it, the program will redirect you to the corresponding websites when you run it. 
 
+### Acknowledgement
+
+Special thanks to Miroslav Bićanić for helping me create the ipakb module.
 
 ### Contributing
 
 If you want to introduce any changes to the program, please contact me first to discuss what you would like to modify. 
+
