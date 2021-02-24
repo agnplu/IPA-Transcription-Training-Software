@@ -174,11 +174,9 @@ class View:
             break
         self.label.configure(text=start_message)
         self.button_next.configure(bg = "SlateGray3")
-        self.info_label.configure(text= "Currently open: {} \nWord count: {} \nType-to-token ratio: {}".format(file_name, doc.count_tokens(), type2token_ratio()))
+        self.info_label.configure(text= "Currently open: {} \nWord count: {} \nType-to-token ratio: {}".format(file_name, doc.count_tokens(), doc.type2token_ratio()), fg="midnight blue")
 
         self.button_next["state"]=tk.NORMAL
-        self.button_answer["state"]=tk.NORMAL
-        self.button_check["state"]=tk.NORMAL
         self.open_btn["state"]=tk.DISABLED
         self.open_btn.configure(bg="SystemButtonFace")
 
@@ -196,7 +194,7 @@ class View:
         self.correct_label.configure(text="", bg="SlateGray3")
         self.active_word = None
         self.next_pressed = 0
-        self.info_label.configure(text="Currently open: \nWord count: \nType-to-token ratio:")
+        self.info_label.configure(text="Currently open: \nWord count: \nType-to-token ratio:", fg="black")
         if os.path.exists("word.mp3"):
             os.remove("word.mp3")
 
@@ -227,6 +225,8 @@ class View:
         self.correct_label.configure(text="", bg="SlateGray3")
         self.btn_play["state"] = tk.NORMAL
         self.btn_play.configure(text=self.active_word[1])
+        self.button_check["state"]=tk.NORMAL
+        self.button_answer["state"]=tk.NORMAL
 
     def on_answer_press(self):
         self.correct_label.configure(text=" | ".join(self.transcription[self.active_word]), bg="azure3", fg="midnight blue")
@@ -273,10 +273,3 @@ class View:
 
 
 View()
-        
-        
-        
-
-        
-        
-        
