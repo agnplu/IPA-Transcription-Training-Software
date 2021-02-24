@@ -18,9 +18,8 @@ initial_message =       """Welcome to IPA Transcription Training Software!
                         \n\nFirst, choose your preferred type of training and press SAVE SETTINGS"""
 open_file_message =     "Now open a file by pressing the OPEN FILE button"
 start_message =         """Press START to begin your training.
-                        \n\nREMEMBER!
                         \nThe software checks American English pronunciation only.
-                        \nIn multisyllabic words you are required to mark the main stress of a word"""
+                        \nDon't forget to mark the main stress in multisyllabic words"""
 reset_message =         "Your training is over. \nChoose new settings and open a new file."
 nltk_information =      """Natural Language Toolkit (NLTK)
                         \nA free, open source, platform for building Python programs to work with human language data. It provides a range of interfaces such as text processing libraries for classification, tokenization, stemming, tagging, parsing, and semantic reasoning. Its implementation to a Python program allows for working with corpora, categorizing text, and analyzing its linguistic structures.
@@ -40,7 +39,6 @@ instruction_information= """Follow these simple steps to begin your practice:
                         \n6. Press NEXT to display the next word
                         \n7. When the training is over, repeat the procedure starting from point 1
                         \nHave fun!"""
-
 
 class View:
     def __init__(self):
@@ -105,14 +103,19 @@ class View:
         self.btn_frame.rowconfigure(0, weight=1)
         self.btn_frame.columnconfigure(0, weight=1)
         self.btn_frame.columnconfigure(1, weight=1)
+        self.btn_frame.columnconfigure(2, weight=1)
 
-        self.button_check = tk.Button(self.btn_frame, text="Check", command=lambda: self.on_check_press(self.ipakb.textbox.get("1.0", 'end-1c')))
+        self.button_check=tk.Button(self.btn_frame, text="Check", command=lambda: self.on_check_press(self.ipakb.textbox.get("1.0", 'end-1c')))
         self.button_check.grid(row=0, column=0, sticky='news')
 
-        self.button_next = tk.Button(self.btn_frame, text="Start", command=self.on_next_press)
-        self.button_next.grid(row=0, column=1, sticky='news')
+        self.button_answer=tk.Button(self.btn_frame, text="Show correct", command=self.on_answer_press)
+        self.button_answer.grid(row=0, column=1, sticky='news')
+
+        self.button_next=tk.Button(self.btn_frame, text="Start", command=self.on_next_press)
+        self.button_next.grid(row=0, column=2, sticky='news')
 
         self.button_check["state"] = tk.DISABLED
+        self.button_answer["state"] = tk.DISABLED
         self.button_next["state"] = tk.DISABLED
 
         self.open_window()
@@ -123,6 +126,7 @@ class View:
 
         self.cfgp.btn_save["state"] = tk.DISABLED
         self.label.configure(text=open_file_message)
+        self.open_btn.configure(bg="SlateGray3")
 
         if self.cfg.audio:
             self.btn_play.grid()
@@ -171,11 +175,14 @@ class View:
         self.button_next.configure(bg = "SlateGray3")
         self.info_label.configure(text= "Currently open: {} \nWord count: {} \nType-to-token ratio: {}".format(file_name, 5, 5))
         self.button_next["state"] = tk.NORMAL
+        self.button_answer["state"] = tk.NORMAL
         self.button_check["state"] = tk.NORMAL
+
 
     def reset_data(self):
         self.button_next["state"] = tk.DISABLED
         self.button_next.configure(text="Start")
+        self.button_check["state"] = tk.DISABLED
         self.button_check["state"] = tk.DISABLED
         self.cfgp.btn_save["state"] = tk.NORMAL
         self.label.config(text=reset_message)
@@ -205,10 +212,11 @@ class View:
 
         self.active_word = random.choice(list(self.transcription.keys()))
         self.label.config(text=self.active_word)
-        self.button_next.configure(text="Next")
-        self.button_next.configure(bg='SystemButtonFace')
+        self.button_next.configure(text="Next", bg='SystemButtonFace')
         self.correct_label.configure(text="", bg="SlateGray3")
 
+    def on_answer_press(self):
+        self.correct_label.configure(text="/ ".join(self.transcription[self.active_word]), bg="azure3", fg="midnight blue")
 
     def on_check_press(self, answer):
         correct = self.transcription[self.active_word]
