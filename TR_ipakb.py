@@ -6,7 +6,7 @@ class IPAKB(tk.Frame):
     # so 'a' corresponds to the button 'A', while 'A' corresponds to the
     # combination 'Shift+A'.
     # This map maps every such code to a certain IPA symbol.
-    kb_map = {
+    kb_map={
         # NASALS
         'm': 'm', 'n': 'n', 'N': 'ŋ',
         # UNVOICED PLOSIVES/AFFRICATES/FRICATIVES
@@ -32,16 +32,16 @@ class IPAKB(tk.Frame):
     }
 
 
-    top_rows = [['l', 'r', 'j', 'w', 'm', 'n', 'ŋ'],
+    top_rows=[['l', 'r', 'j', 'w', 'm', 'n', 'ŋ'],
                 ['p', 't', 'θ', 'k', 'f', 's', 'ʃ']]
-    bot_rows = [['b', 'd', 'ð', 'ɡ', 'v', 'z', 'ʒ', 'h'],
+    bot_rows=[['b', 'd', 'ð', 'ɡ', 'v', 'z', 'ʒ', 'h'],
                 ['ɑ', 'a', 'ʌ', 'æ', 'e', 'ɛ', 'ə', 'ˌ'],
                 ['i', 'ɪ', 'o', 'ɔ', 'u', 'ʊ', 'ɜ', 'ˈ']]
 
     def __init__(self, root, on_enter):
         super().__init__(root)
 
-        self.on_enter = on_enter
+        self.on_enter=on_enter
 
         self.columnconfigure(0, weight=1)
         self.rowconfigure(0, weight=1)
@@ -54,7 +54,7 @@ class IPAKB(tk.Frame):
         """Creates and initializes a tk.Text widget and re-binds all
         keys used to write IPA symbols."""
 
-        self.textbox = tk.Text(self, width=40, height=4, font=("Helvetica", 14))
+        self.textbox=tk.Text(self, width=40, height=4, font=("Helvetica", 14))
         self.textbox.grid(row=0, column=0, sticky='nesw')
         for k in IPAKB.kb_map.keys():
             self.textbox.bind(k, self.write_evt)
@@ -76,7 +76,7 @@ class IPAKB(tk.Frame):
         The Space key spans the whole 6th row."""
 
         # Create a root frame
-        self.kb_buttons = tk.Frame(self)
+        self.kb_buttons=tk.Frame(self)
         self.kb_buttons.grid(row=1, column=0, sticky='nesw')
 
         # Define its layout as a 6 by 8 grid
@@ -88,21 +88,21 @@ class IPAKB(tk.Frame):
         # Create and place the top two rows of buttons into the grid
         for r in range(len(IPAKB.top_rows)):
             for c in range(len(IPAKB.top_rows[0])):
-                btn = tk.Button(self.kb_buttons, text=IPAKB.top_rows[r][c], command=lambda key = IPAKB.top_rows[r][c]: self.write(key))
+                btn=tk.Button(self.kb_buttons, text=IPAKB.top_rows[r][c], command=lambda key=IPAKB.top_rows[r][c]: self.write(key))
                 btn.grid(row=r, column=c, sticky='news')
 
         # Create and place the Enter button
-        enter = tk.Button(self.kb_buttons, text="Enter", command = lambda: self.on_enter(self.textbox.get("1.0", 'end-1c')))
+        enter=tk.Button(self.kb_buttons, text="Enter", command=lambda: self.on_enter(self.textbox.get("1.0", 'end-1c')))
         enter.grid(row=0, rowspan=2, column=7, sticky='news')
 
         # Create and place rows 3-5
         for r in range(len(IPAKB.bot_rows)):
             for c in range(len(IPAKB.bot_rows[0])):
-                btn = tk.Button(self.kb_buttons, text=IPAKB.bot_rows[r][c], command = lambda key = IPAKB.bot_rows[r][c]: self.write(key))
+                btn=tk.Button(self.kb_buttons, text=IPAKB.bot_rows[r][c], command=lambda key=IPAKB.bot_rows[r][c]: self.write(key))
                 btn.grid(row=r+2, column=c, sticky='nesw')
 
         # Create and place the Space button
-        space = tk.Button(self, text='space', command=lambda key = ' ': self.write(key))
+        space=tk.Button(self, text='space', command=lambda key=' ': self.write(key))
         space.grid(row=5, column=0, columnspan=8, sticky='nesw')
 
     def write(self, key):
