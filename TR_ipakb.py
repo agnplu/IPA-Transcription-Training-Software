@@ -115,7 +115,7 @@ class IPAKB(tk.Frame):
             self.textbox.insert(tk.END, IPAKB.kb_map["<" + event.keysym + ">"])
         elif event.keysym in IPAKB.kb_map:
             self.textbox.insert(tk.END, IPAKB.kb_map[event.keysym])
-        elif event.keysym == "Return":
+        elif event.keysym=="Return":
             self.on_enter(self.textbox.get("1.0", 'end-1c'))
         elif event.keysym in ["space", "backspace"]:
             return
