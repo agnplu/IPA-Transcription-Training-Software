@@ -4,7 +4,7 @@ from TR_model import Text
 from TR_cfgpanel import ConfigPanel
 import random
 from tkinter import filedialog
-from gtts import gTTS, gTTSError
+from gtts import gTTS
 from playsound import playsound
 import os
 import webbrowser
@@ -195,11 +195,15 @@ class View:
 
     def on_play(self):
         if not os.path.exists("word.mp3"):
-            tts = gTTS(text = self.active_word[0], lang = 'en', slow = False)
-            try:
-                tts.save('word.mp3')
-            except gTTSError as e:
-                print(e)
+            """
+            An unexpected problem arose here:
+            when I started designing the software, gTTs allowed for choosing American English by selecting "en-us".
+            Recently, however, it has changed as Google has removed almost all <lang>-<geo> tags that used to work.
+            Hence, for now, only British English is available.
+            The code will be updated as soon as the choice of American English is brought back.
+            """
+            tts = gTTS(text = self.active_word[0], lang = "en")
+            tts.save('word.mp3')
         playsound('word.mp3')
 
     def on_next_press(self):
