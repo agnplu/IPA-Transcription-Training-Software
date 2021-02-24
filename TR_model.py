@@ -3,7 +3,7 @@ from nltk.tokenize import word_tokenize
 import eng_to_ipa as ipa
 import string    
 
-suspicious_words = set(""""abstract accent address annex ally attribute combat compound compress 
+suspicious_words=set(""""abstract accent address annex ally attribute combat compound compress 
                            conduct conflict conscript consort contract contrast converse convert 
                            convict decrease desert detail discharge envelope escort exploit export 
                            extract finance fragment impact imprint increase insert insult mandate 
@@ -14,21 +14,21 @@ suspicious_words = set(""""abstract accent address annex ally attribute combat c
 class Text:
     def __init__(self, path):
        with open(path) as file:
-        self.text = file.read()
-        self.annotated = nltk.pos_tag(self.remove_punctuation(), tagset='universal')
+        self.text=file.read()
+        self.annotated=nltk.pos_tag(self.remove_punctuation(), tagset='universal')
                 
     def tokenize(self):
         return word_tokenize(self.text)
     
     def remove_punctuation(self):
-        stripped_text = []
+        stripped_text=[]
         for el in self.tokenize():
             if el not in string.punctuation and el != "n't" and not el.startswith("'"):
                 stripped_text.append(el) 
         return stripped_text
   
     def lower(self):
-        lowered_tokens = []
+        lowered_tokens=[]
         for el in self.annotated:
             lowered_tokens.append(el[0].lower())
         return lowered_tokens
@@ -37,7 +37,7 @@ class Text:
         return set(self.annotated)
         
     def filter_tokens(self, filtering_arguments):
-        chosen_words = []
+        chosen_words=[]
         for el in self.remove_duplicates():
             if len(filtering_arguments) == 0:
                 chosen_words.append(el)
@@ -47,9 +47,9 @@ class Text:
         return chosen_words   
 
     def transcribe(self, tokens):
-        transcribed = {}
+        transcribed={}
         for el in tokens:
-            trans_el = ipa.ipa_list(el[0])[0]
+            trans_el=ipa.ipa_list(el[0])[0]
             if len(trans_el) == 0:
                 continue
             elif len(trans_el) == 1:
@@ -57,11 +57,11 @@ class Text:
             else:
                 if el[0].lower() in suspicious_words:
                     if el[1].startswith("V"):
-                        transcribed[el] = [trans_el[0]]
+                        transcribed[el]=[trans_el[0]]
                     else:
-                        transcribed[el] = [trans_el[-1]]
+                        transcribed[el]=[trans_el[-1]]
                 else:
-                    transcribed[el] = trans_el
+                    transcribed[el]=trans_el
         return transcribed
     
     def count_types(self):
