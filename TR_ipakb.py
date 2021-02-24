@@ -28,14 +28,14 @@ class IPAKB(tk.Frame):
         # SCHWA
         'y': 'ə', 'Y': 'ɜ',
         # SPECIAL
-        '<colon>': 'ː', '<quoteright>': 'ˈ', '<Return>': ''
+        '<colon>': 'ˌ', '<quoteright>': 'ˈ', '<Return>': ''
     }
 
 
     top_rows = [['l', 'r', 'j', 'w', 'm', 'n', 'ŋ'],
                 ['p', 't', 'θ', 'k', 'f', 's', 'ʃ']]
     bot_rows = [['b', 'd', 'ð', 'ɡ', 'v', 'z', 'ʒ', 'h'],
-                ['ɑ', 'a', 'ʌ', 'æ', 'e', 'ɛ', 'ə', 'ː'],
+                ['ɑ', 'a', 'ʌ', 'æ', 'e', 'ɛ', 'ə', 'ˌ'],
                 ['i', 'ɪ', 'o', 'ɔ', 'u', 'ʊ', 'ɜ', 'ˈ']]
 
     def __init__(self, root, on_enter):

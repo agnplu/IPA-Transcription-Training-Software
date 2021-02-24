@@ -188,6 +188,7 @@ class View:
         self.button_check["state"]=tk.DISABLED
         self.button_answer["state"]=tk.DISABLED
         self.btn_play["state"] = tk.DISABLED
+        self.btn_play.configure(text="Play")
         self.cfgp.btn_save["state"]=tk.NORMAL
         self.cfgp.btn_save.configure(bg="SlateGray3")
         self.label.config(text=reset_message, font="TkDefaultFont")
@@ -224,9 +225,10 @@ class View:
         self.button_next.configure(text="Next", bg="SystemButtonFace")
         self.correct_label.configure(text="", bg="SlateGray3")
         self.btn_play["state"] = tk.NORMAL
+        self.btn_play.configure(text=self.active_word[1])
 
     def on_answer_press(self):
-        self.correct_label.configure(text="/ ".join(self.transcription[self.active_word]), bg="azure3", fg="midnight blue")
+        self.correct_label.configure(text=" | ".join(self.transcription[self.active_word]), bg="azure3", fg="midnight blue")
 
     def on_check_press(self, answer):
         correct = self.transcription[self.active_word]
