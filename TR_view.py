@@ -26,7 +26,15 @@ nltk_information =      """Natural Language Toolkit (NLTK)
                         \nGoogle Text-to-Speech (gTTs)
                         \nThis Python library interfaces with Google Translate's text-to-speech API to convert a string into an audio file."""
 contact_information=    "My name is Agnieszka Pludra and I am a third year university student at Adam Mickiewicz University in Poznań, Poland. \nIf you have any questions or suggestions, send me an email!"
-instruction_information= "bleble"
+instruction_information= """Follow these simple steps to begin your practice:
+                            \n1. Choose preferred settings and click SAVE SETTINGS
+                            \n2. Open a txt file by clicking OPEN FILE
+                            \n3. When ready, press START
+                            \n4. Transcribe the word you see/hear using the IPA keyboard
+                            \n5. Press CHECK to verify your transcription
+                            \n6. Press NEXT to display the next word
+                            \n7. When the training is over, repeat the procedure starting from point 1
+                            \nHave fun!"""
 
 
 class View:
@@ -50,7 +58,7 @@ class View:
 
         helpmenu = tk.Menu(menubar)
         menubar.add_cascade(label="Help", menu=helpmenu)
-        helpmenu.add_command(label="About the program", command=self.instruction_info)
+        helpmenu.add_command(label="Instructions", command=self.instruction_info)
         helpmenu.add_command(label="About the modules", command=self.modules_info)
         helpmenu.add_command(label="Contact the author", command=self.contact_info)
 
@@ -208,7 +216,7 @@ class View:
         top = tk.Toplevel()
         top.title("Instructions")
         top.geometry("600x400+330+200")
-        info_label = tk.Label(top, text = instruction_information, font=9, wraplength=550, padx=10, pady=10)
+        info_label = tk.Label(top, text = instruction_information, font=9, wraplength=550, padx=10, pady=10, justify=tk.LEFT)
         info_label.pack(padx=10, pady=10, fill=tk.BOTH)
         button_close = tk.Button(top, text="Close", command=top.destroy, bg="SlateGray3")
         button_close.pack(padx=10, pady=10)
@@ -228,7 +236,7 @@ class View:
         top.geometry("600x250+330+200")
         contact_label = tk.Label(top, text=contact_information, font=10, wraplength=550, padx=10, pady=10)
         contact_label.pack(padx=10, pady=25, fill=tk.BOTH)
-        email_label = tk.Label(top, text="agnplu@st.amu.edu.pl", bg="SlateGray3", font=10, fg="white", pady=10, borderwidth=1, relief="solid")
+        email_label = tk.Label(top, text="agnplu@st.amu.edu.pl", bg="SlateGray3", font=10, pady=10, borderwidth=1, relief="solid")
         email_label.pack(padx=10, pady=(0,15), fill=tk.BOTH)
         button_close = tk.Button(top, text="Close", command=top.destroy, bg="SlateGray3")
         button_close.pack(padx = 10, pady = 20)
