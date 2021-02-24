@@ -29,7 +29,7 @@ nltk_information=      """Natural Language Toolkit (NLTK)
                         \n------------------------------------------------------------------------------------------------------------
                         \nGoogle Text-to-Speech (gTTs)
                         \nThis Python library interfaces with Google Translate's text-to-speech API to convert a string into an audio file."""
-contact_information=    "My name is Agnieszka Pludra and I am a third year student of English Linguistics at Adam Mickiewicz University in Poznań, Poland. \nIf you have any questions or suggestions, send me an email!"
+contact_information=    "My name is Agnieszka Pludra and I am a third year student of English Linguistics at Adam Mickiewicz University in Poznań, Poland. \n\nIf you have any questions or suggestions, send me an email!"
 instruction_information= """Follow these simple steps to begin your practice:
                         \n1. Choose preferred settings and click SAVE SETTINGS
                         \n2. Open a txt file by clicking OPEN FILE
@@ -232,9 +232,6 @@ class View:
 
     def on_check_press(self, answer):
         correct=self.transcription[self.active_word]
-        print("ANSWER: ", answer)
-        print("CORRECT: ", correct)
-        print(answer in correct)
         if answer in correct:
             self.correct_label.configure(text="Correct!", fg="dark green", bg="azure3")
         else:
@@ -261,7 +258,7 @@ class View:
     def contact_info(self):
         top=tk.Toplevel()
         top.title("Contact the author")
-        top.geometry("600x250+330+200")
+        top.geometry("600x300+330+200")
         contact_label=tk.Label(top, text=contact_information, font=10, wraplength=550, padx=10, pady=10)
         contact_label.pack(padx=10, pady=25, fill=tk.BOTH)
         email_label=tk.Label(top, text="agnplu@st.amu.edu.pl", bg="SlateGray3", font=10, pady=10, borderwidth=1, relief="solid")
