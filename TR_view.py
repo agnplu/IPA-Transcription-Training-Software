@@ -174,7 +174,8 @@ class View:
             break
         self.label.configure(text=start_message)
         self.button_next.configure(bg = "SlateGray3")
-        self.info_label.configure(text= "Currently open: {} \nWord count: {} \nType-to-token ratio: {}".format(file_name, 5, 5))
+        self.info_label.configure(text= "Currently open: {} \nWord count: {} \nType-to-token ratio: {}".format(file_name, doc.count_tokens(), type2token_ratio()))
+
         self.button_next["state"]=tk.NORMAL
         self.button_answer["state"]=tk.NORMAL
         self.button_check["state"]=tk.NORMAL

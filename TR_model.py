@@ -64,12 +64,11 @@ class Text:
                     transcribed[el] = trans_el
         return transcribed
     
-    def count_unique(self):
-        return len(set(self.lower))
+    def count_types(self):
+        return len(set(self.lower()))
     
     def count_tokens(self):
-        return len(self.lower)
+        return len(self.lower())
 
     def type2token_ratio(self):
-        return round(self.count_unique() / self.count_tokens(), 3)
- 
+        return round(self.count_types() / self.count_tokens(), 3)
