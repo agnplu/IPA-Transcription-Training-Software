@@ -42,7 +42,7 @@ For the program to run properly, you must install the abovementioned external mo
 
 ### Acknowledgement
 
-Special thanks to Miroslav Bićanić for helping me with designing the ipakb module.
+Special thanks to Miroslav Bićanić for helping me create the ipakb module.
 
 ### Contributing
 
